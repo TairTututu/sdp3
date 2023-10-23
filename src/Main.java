@@ -17,7 +17,7 @@ class Iron implements ElectricDevice {
 
 class WaterFilter {
     public void connectToWaterSupply() {
-        System.out.println("Water filter is connected to the water supply.");
+        System.out.println("Water filter is connected to the water.");
     }
 }
 
