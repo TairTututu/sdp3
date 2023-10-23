@@ -1,64 +1,55 @@
-interface MusicPlayer {
-    void playMusic();
-    void stopMusic();
+interface ElectricDevice {
+    void plugIn();
+    void unplug();
 }
 
-class SamsungPhone {
-    void startSamsungMusic() {
-        System.out.println("Samsung music started to play");
+class Iron implements ElectricDevice {
+    @Override
+    public void plugIn() {
+        System.out.println("Iron is plugged into the socket.");
     }
-    void stopSamsungMusic() {
-        System.out.println("Samsung music turned off");
-    }
-}
 
-class SonyWalkman {
-    void startSonyMusic() {
-        System.out.println("Sony music started to play");
-    }
-    void stopSonyMusic() {
-        System.out.println("Sony music turned off");
+    @Override
+    public void unplug() {
+        System.out.println("Iron is unplugged from the socket.");
     }
 }
 
-class SamsungAdapter implements MusicPlayer {
-    SamsungPhone samsungPhone;
-
-    public SamsungAdapter(SamsungPhone samsungPhone) {
-        this.samsungPhone = samsungPhone;
-    }
-
-    public void playMusic() {
-        samsungPhone.startSamsungMusic();
-    }
-
-    public void stopMusic() {
-        samsungPhone.stopSamsungMusic();
+class WaterFilter {
+    public void connectToWaterSupply() {
+        System.out.println("Water filter is connected to the water supply.");
     }
 }
 
-class SonyAdapter implements MusicPlayer {
-    SonyWalkman sonyWalkman;
+class ElectricAdapter implements ElectricDevice {
+    private WaterFilter waterFilter;
 
-    public SonyAdapter(SonyWalkman sonyWalkman) {
-        this.sonyWalkman = sonyWalkman;
+    public ElectricAdapter(WaterFilter waterFilter) {
+        this.waterFilter = waterFilter;
     }
 
-    public void playMusic() {
-        sonyWalkman.startSonyMusic();
+    @Override
+    public void plugIn() {
+        waterFilter.connectToWaterSupply();
+        System.out.println("Adapter is plugged into the socket.");
     }
 
-    public void stopMusic() {
-        sonyWalkman.stopSonyMusic();
+    @Override
+    public void unplug() {
+        System.out.println("Adapter is unplugged from the socket.");
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        MusicPlayer samsungMusicPlayer = new SamsungAdapter(new SamsungPhone());
-        MusicPlayer sonyMusicPlayer = new SonyAdapter(new SonyWalkman());
+        ElectricDevice iron = new Iron();
+        WaterFilter waterFilter = new WaterFilter();
+        ElectricDevice adapter = new ElectricAdapter(waterFilter);
 
-        samsungMusicPlayer.playMusic();
-        sonyMusicPlayer.stopMusic();
+        iron.plugIn();
+        iron.unplug();
+
+        adapter.plugIn();
+        adapter.unplug();
     }
 }
